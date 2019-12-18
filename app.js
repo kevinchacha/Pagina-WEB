@@ -1,17 +1,11 @@
-//creamos servidor web
-const http=require('http');
-http.createServer((req,res)=>{
-    res.writeHead(200,{'Content-Type':'aplication/json'});
-    let salida={
-        nombre:'Kevin',
-        edad:'21',
-        url: req.url
+const axios=require('axios');
+const ubicacion=require('./controlador/ubicacion');
+const argv =require('yargs').options({
+    nombre:{
+    alias:'n',
+    desc:'Nombre ciudad para obtener clima',
+    demand: true
     }
-    //cambiamos a aplicacion json
-    //creamos un objeto json
-    res.write(JSON.stringify(salida));
-    res.end();
-}).listen(8085);
-
-console.log('Escuchando en el puerto 8085');
-//app que brinde servicios web
+}).argv;
+ubicacion.getCiudadlalo(argv.nombre)
+    .then(console.log);
